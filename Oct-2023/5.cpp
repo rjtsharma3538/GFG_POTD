@@ -1,52 +1,44 @@
-// this is leetcode daily challenge of 5 Oct 2023
-// problem link : https://leetcode.com/problems/majority-element-ii/submissions/?envType=daily-question&envId=2023-10-05
+// this is gfg problem of the day of 9 Oct 2023
+// problem link : https://practice.geeksforgeeks.org/problems/count-number-of-substrings4528/1
 
-class Solution {
-public:
-    vector<int> majorityElement(vector<int>& nums) {
-
-        int num1=-1,num2=-1,cnt1=0,cnt2=0;
-
-        for(auto it:nums)
+class Solution
+{
+  public:
+    
+    long long int count(string s, int k)
+    {
+        int i=0,j=0,ans=0;
+        vector<int> mp(26,0);
+        int sz=0;
+        
+        while(j<s.size())
         {
-            if(cnt1==0&&it!=num2)
+            mp[s[j]-'a']++;
+            if(mp[s[j]-'a']==1)
+                sz++;
+            if(sz<=k)
             {
-                cnt1++;
-                num1=it;
+                ans+=(j-i+1);
+                j++;
             }
-            else if(cnt2==0&&it!=num1)
-            {
-                cnt2++;
-                num2=it;
-            }
-            else if(it==num1)
-                cnt1++;
-            else if(it==num2)
-                cnt2++;
             else 
             {
-                cnt1--;
-                cnt2--;
+                while(sz>k)
+                {
+                    mp[s[i]-'a']--;
+                    if(mp[s[i]-'a']==0)
+                        sz--;
+                    i++;
+                }
+                ans+=(j-i+1);
+                j++;
             }
         }
-
-        cnt1=0;
-        cnt2=0;
-
-        for(auto it:nums)
-        {
-            if(it==num1)
-                cnt1++;
-            else if(it==num2)
-                cnt2++;
-        }
-
-        vector<int> ans;
-        if(cnt1>nums.size()/3)
-            ans.push_back(num1);
-        if(cnt2>nums.size()/3)
-            ans.push_back(num2);
         
         return ans;
+    }
+    
+    long long int substrCount (string s, int k) {
+        return count(s,k)-count(s,k-1);
     }
 };
