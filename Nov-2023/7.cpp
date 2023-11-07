@@ -1,49 +1,28 @@
-// this is gfg problem of the day of 6 Nov 2023
-// problem link : https://www.geeksforgeeks.org/problems/c-letters-collection4552/1
+// this is gfg problem of the day of 7 Nov 2023
+// problem link : https://www.geeksforgeeks.org/problems/sum-of-upper-and-lower-triangles-1587115621/1
 
-class Solution{
-public:
-    vector<int> matrixSum(int n, int m, vector<vector<int>> mat, int q, vector<int> queries[])
+class Solution
+{   
+    public:
+    //Function to return sum of upper and lower triangles of a matrix.
+    vector<int> sumTriangles(const vector<vector<int> >& matrix, int n)
     {
-        int dr1[]={-1,-1,-1,0,0,1,1,1};
-        int dc1[]={-1,0,1,-1,1,-1,0,1};
-        
-        int dr2[]={2,2,2,2,2,-2,-2,-2,-2,-2,0,0,-1,-1,1,1};
-        int dc2[]={-2,-1,0,1,2,-2,-1,0,1,2,-2,2,-2,2,-2,2};
-        
-        vector<int> v;
-        
-        for(int i=0;i<q;i++)
+        // code here
+        int up=0;
+        for(int i=0;i<n;i++)
         {
-            int ans=0;
-            int r=queries[i][1],c=queries[i][2];
-            if(queries[i][0]==1)
-            {
-                for(int j=0;j<8;j++)
-                {
-                    int new_r=r+dr1[j];
-                    int new_c=c+dc1[j];
-                    
-                    if(new_r<n&&new_c<m&&new_r>=0&&new_c>=0)
-                        ans+=mat[new_r][new_c];
-                }
-            }
-            
-            else 
-            {
-                for(int j=0;j<16;j++)
-                {
-                    int new_r=r+dr2[j];
-                    int new_c=c+dc2[j];
-                    
-                    if(new_r<n&&new_c<m&&new_r>=0&&new_c>=0)
-                        ans+=mat[new_r][new_c];
-                }
-            }
-            
-            v.push_back(ans);
+            for(int j=i;j<n;j++)
+                up+=matrix[i][j];
         }
         
-        return v;
+        int down=0;
+        
+        for(int i=n-1;i>=0;i--)
+        {
+            for(int j=i;j>=0;j--)
+                down+=matrix[i][j];
+        }
+        
+        return {up,down};
     }
-};
+}
